@@ -28,17 +28,21 @@ earnings = 0
 max_value = 0
 
 for n in range(1, len(set1) + 1):
-    data = itertools.combinations(set1, n)
+    data = itertools.combinations(items, n)
     subsets = set(data)
-    print(subsets)
-    exit()
+    # subsets = list(data)
+    # exit()
     efficiency += len(subsets)
     for i in subsets:
         total_Value = 0
         earnings = 0
         for j in i:
-            total_Value += w[int(j) - 1]
-            earnings += w[int(j) - 1] * v[int(j) - 1] / 100
+            # print(j)
+            # print(items.index(j)+1)
+            # total_Value += w[int(j) - 1]
+            total_Value += w[items.index(j)]
+            earnings += w[items.index(j)] * v[items.index(j)] / 100
+            # earnings += w[int(j) - 1] * v[int(j) - 1] / 100
         if total_Value < 500:
             print("subset: ", i, end=" ")
             print("weight: ", total_Value, end=" ")
@@ -50,11 +54,16 @@ for n in range(1, len(set1) + 1):
     print("\n")
 
 cost = 0
+list_index = []
 for i in winner_subset:
-    cost += w[i - 1]
+    cost += w[items.index(i)]
+    list_index.append(items.index(i) + 1)
+    # cost += w[i - 1]
+
 print("cout total: ", cost)
 print("benefice: ", max_value)
 print("actions achetees: ", winner_subset)
+print("numeros actions: ", list_index)
 
 
 efficiency += len(subsets)
