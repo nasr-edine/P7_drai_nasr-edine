@@ -10,7 +10,7 @@ if len(sys.argv) == 2:
     items, w, v = getDataFromCsv(csv_path)
     # printDataSet(items, w, v)
     # print("row number: ", len(items))
-    exit()
+    # exit()
 
 # item = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 # w = [20, 30, 50, 70, 60, 80, 22, 26, 48, 34,
@@ -30,6 +30,8 @@ max_value = 0
 for n in range(1, len(set1) + 1):
     data = itertools.combinations(set1, n)
     subsets = set(data)
+    print(subsets)
+    exit()
     efficiency += len(subsets)
     for i in subsets:
         total_Value = 0
