@@ -2,3 +2,5 @@
 env/
 __pycache__/
 backtracking.py
+knapsack2.py
+output*
