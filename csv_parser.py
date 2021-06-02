@@ -1,6 +1,7 @@
 import csv
 from pathlib import Path
 import sys
+import collections
 
 # import pandas as pd
 
@@ -21,21 +22,21 @@ def getDataFromCsv(dataFile):
     with open(dataFile) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         next(csv_reader)
-        line_count = 0
         for row in csv_reader:
             if float(row[1]) > 0 and float(row[2]) > 0:
                 items.append((row[0]))
                 w.append(float(row[1]))
                 v.append(float(row[2]))
-                line_count += 1
+
+    duplicate_shares = [item for item,
+                        count in collections.Counter(items).items() if count > 1]
+    indices = []
+    for j in range(len(duplicate_shares)):
+        res = ([i for i, x in enumerate(items) if x == duplicate_shares[j]])
+        indices += res
+
+    for indice in indices:
+        items.pop(indice)
+        w.pop(indice)
+        v.pop(indice)
     return items, w, v
-
-
-# data_file_name = sys.argv[1]
-# parse input data
-# df = pd.read_csv(data_file_name, names=['name', 'price', 'profit'])
-
-# print(df['name'])
-# print(df['price'])
-# print(list(df['profit']))
-# print((df['profit']))
