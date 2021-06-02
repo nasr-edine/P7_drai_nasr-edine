@@ -4,3 +4,13 @@ __pycache__/
 backtracking.py
 knapsack2.py
 output*
+Knapsack_problem_Continuous.py
+Optimized_dynamic_programming_solution.py
+dp_approch.py
+dp_knapsack.py
+fractional_knapsack.py
+greedy_alog.py
+ortool_knapsack_solver.py
+recursion_brute_force.py
+KnapsackProblems.pdf
+doc/

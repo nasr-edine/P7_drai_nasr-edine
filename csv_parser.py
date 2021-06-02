@@ -21,11 +21,16 @@ def getDataFromCsv(dataFile):
         next(csv_reader)
         line_count = 0
         for row in csv_reader:
-            items.append((row[0]))
-            # items.append(int(row[0]))
-            w.append(float(row[1]))
-            v.append(float(row[2]))
-            line_count += 1
+            if float(row[1]) > 0 and float(row[2]) > 0:
+                items.append((row[0]))
+                # items.append(int(row[0]))
+                w.append(float(row[1]))
+                v.append(float(row[2]))
+                line_count += 1
+            # else:
+            #     print(float(row[1]))
+            #     print(float(row[2]))
+            #     input()
     return items, w, v
 
 
