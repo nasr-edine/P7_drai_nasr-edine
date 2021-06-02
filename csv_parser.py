@@ -2,6 +2,8 @@ import csv
 from pathlib import Path
 import sys
 
+# import pandas as pd
+
 
 def printDataSet(items, w, v):
     print(19 * "-")
@@ -23,20 +25,17 @@ def getDataFromCsv(dataFile):
         for row in csv_reader:
             if float(row[1]) > 0 and float(row[2]) > 0:
                 items.append((row[0]))
-                # items.append(int(row[0]))
                 w.append(float(row[1]))
                 v.append(float(row[2]))
                 line_count += 1
-            # else:
-            #     print(float(row[1]))
-            #     print(float(row[2]))
-            #     input()
     return items, w, v
 
 
-# if len(sys.argv) == 2:
-#     data_folder = Path("csv/")
-#     csv_path = data_folder / sys.argv[1]
-#     items, w, v = getDataFromCsv(csv_path)
-#     printDataSet(items, w, v)
-#     print("row number: ", len(items))
+# data_file_name = sys.argv[1]
+# parse input data
+# df = pd.read_csv(data_file_name, names=['name', 'price', 'profit'])
+
+# print(df['name'])
+# print(df['price'])
+# print(list(df['profit']))
+# print((df['profit']))
