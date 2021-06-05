@@ -1,62 +1,45 @@
-import itertools
-import sys
 
-from csv_parser import getDataFromCsv
-from pathlib import Path
+def dynamic_programming_solver(items, weights, values, CAPACITY, n_items):
+    if CAPACITY <= 0 or n_items == 0 or len(weights) != n_items:
+        print("error")
+        exit()
 
-if len(sys.argv) == 2:
-    data_folder = Path("csv/")
-    csv_path = data_folder / sys.argv[1]
-    items, w, v = getDataFromCsv(csv_path)
+    rows, cols = (n_items, CAPACITY+1)
 
-# | Item | Weight | Value |
-# |------|--------|-------|
-# | 1    | 2      | 1     |
-# | 2    | 10     | 20    |
-# | 3    | 3      | 3     |
-# | 4    | 6      | 14    |
-# | 5    | 18     | 100   |
+    # create a two dimensional array for Memoization, each element is initialized to '0'
+    M = [[0 for i in range(cols)] for j in range(rows)]
 
-# Put a placeholder 0 weight, 0 value item to max
-# these line up better with the 1D memoization table K
-# item_weights = [0, 2, 10, 3, 6, 18]
-# item_values = [0, 1, 20, 3, 14, 100]
+    for row in range(rows):
+        for col in range(cols):
+            if weights[row] > col:
+                M[row][col] = M[row - 1][col]
+            else:
+                x = max(M[row - 1][col], M[row - 1]
+                        [col - weights[row]] + values[row])
+                M[row][col] = x
 
-# item_weights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-#                 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-# item_weights = [20, 30, 50, 70, 60, 80, 22, 26,
-#                 48, 34, 42, 110, 38, 14, 18, 8, 4, 10, 24, 114]
-# item_values = [5, 10, 15, 20, 17, 25, 7, 11,
-#                13, 27, 17, 9, 23, 1, 3, 8, 12, 14, 21, 18]
-item_weights = w
-item_values = v
+    i = rows - 1
+    j = cols - 1
+    while M[i][j] == M[i][j - 1]:
+        j -= 1
 
-for i in range(len(item_weights)):
-    value = item_weights[i] * item_values[i] / 100
-    print(value, end=' ')
-    item_values[i] = value
-n = len(item_weights)
-W = 500  # total weight capacity
-K = [[0 for w in range(W + 1)] for i in range(n)]
+    i = rows - 1
+    best_items = []
+    best_items_index = []
 
-# Recurrence
-for i in range(1, n):
-    for w in range(1, W + 1):
-        wi = item_weights[i]
-        vi = item_values[i]
+    while j > 0:
+        while i > 0 and M[i][j] == M[i - 1][j]:
+            i -= 1
+        j = j - weights[i]
+        if j >= 0:
+            best_items.append(items[i])
+            best_items_index.append(i)
+        i -= 1
 
-        if wi <= w:
-            print(i)
-            print(w)
-            print(wi)
-            K[i][w] = max([K[i - 1][w - wi] + vi, K[i - 1][w]])
-        else:
-            K[i][w] = K[i - 1][w]
+    cost = 0
+    for i in best_items_index:
+        cost += weights[i]
 
-# Results
-print("Result: ", K[n - 1][W])
-
-# Optional: Uncomment to view the 2D table
-# from pandas import *
-# print("K table:")
-# print(DataFrame(K))
+    cost = cost / 100
+    max_value = M[rows - 1][cols - 1]/10000
+    return cost, max_value, best_items
