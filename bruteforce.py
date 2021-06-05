@@ -1,7 +1,7 @@
 from itertools import combinations
 
 
-def brute_force(n, capacity, weights, values, items):
+def brute_force_solver(n, capacity, weights, values, items):
     """Brute force method for solving knapsack problem
     :param n: number of existing items
     :param capacity: the capacity of knapsack
@@ -25,4 +25,6 @@ def brute_force(n, capacity, weights, values, items):
     for i in best_subset:
         cost += weights[items.index(i)]
 
+    cost = cost/100
+    max_value = max_value / 10000
     return cost, max_value, best_subset

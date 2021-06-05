@@ -5,7 +5,8 @@ import os
 from pathlib import Path
 
 from csv_parser import getDataFromCsv
-from bruteforce import brute_force
+from bruteforce import brute_force_solver
+from optimized import dynamic_programming_solver
 
 
 def print_results(cost, best_profit, best_subset, solving_time):
@@ -31,17 +32,32 @@ if __name__ == '__main__':
     path = Path("./")
     csv_path = os.path.join(path, filename)
 
-    CAPACITY = 500
+    # get datas from csv file
+    capacity = 500
     items, weights, values = getDataFromCsv(csv_path)
     nb_items = len(items)
 
+    # multiplication by 100 for using integer numbers instead of floats
+    capacity *= 100
     for i in range(nb_items):
-        values[i] = weights[i] * values[i] / 100
+        weights[i] = int(weights[i] * 100)
 
+    # mutiplication for get the profit values in euro currency instead of percent
+    for i in range(nb_items):
+        values[i] = weights[i] * values[i]
+
+    # beginning brute force solver
     start = time.time()
-    cost, best_profit, best_subset = brute_force(
-        nb_items, CAPACITY, weights, values, items)
+    cost, best_profit, best_subset = brute_force_solver(
+        nb_items, capacity, weights, values, items)
     stop = time.time()
     solving_time = stop - start
+    print_results(cost, best_profit, best_subset, solving_time)
 
+    # beginning dynamic programming solver
+    start = time.time()
+    cost, best_profit, best_subset = dynamic_programming_solver(
+        items, weights, values, capacity, nb_items)
+    stop = time.time()
+    solving_time = stop - start
     print_results(cost, best_profit, best_subset, solving_time)
