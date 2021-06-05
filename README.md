@@ -60,4 +60,4 @@ open -a "safari" flake-report/index.html
 ```
 ##### In command line
 ```bash 
-flake8 main.py bruteforce.py optimized.py
+flake8 main.py bruteforce.py optimized.py csv_parser.py
