@@ -1,30 +1,47 @@
 import sys
 import time
+import os
 
 from pathlib import Path
 
 from csv_parser import getDataFromCsv, printDataSet
 from bruteforce import brute_force
 
-if __name__ == '__main__':
-    if len(sys.argv) == 2:
-        data_folder = Path("./")
-        csv_path = data_folder / sys.argv[1]
-        items, w, v = getDataFromCsv(csv_path)
-        for i in range(len(v)):
-            v[i] = w[i] * v[i] / 100
 
-        n = len(items)
-        capacity = 500
+def print_results(cost, best_profit, best_subset, solving_time):
+    print("The shares bought:\n")
+    best_combination_str = " | ".join("%s" % i for i in best_subset)
+    print(best_combination_str, "\n")
+    padding = 14
+    cost = "€{:.2f}".format(cost)
+    best_profit = "€{:.2f}".format(best_profit)
+    solving_time = "{:.2f}s".format(solving_time)
+    print("Total cost:".ljust(padding), cost, end='\n')
+    print("Total return: ".ljust(padding), best_profit)
+    print("\nTime solving: ".ljust(padding), solving_time)
+
+
+if __name__ == '__main__':
+    try:
+        filename = (sys.argv[1])
+    except:
+        print('Usage: python main.py FILENAME')
+        sys.exit(1)
+
+    path = Path("./")
+    csv_path = os.path.join(path, filename)
+
+    CAPACITY = 500
+    items, weights, values = getDataFromCsv(csv_path)
+    nb_items = len(items)
+
+    for i in range(nb_items):
+        values[i] = weights[i] * values[i] / 100
+
     start = time.time()
     cost, best_profit, best_subset = brute_force(
-        n, capacity, w, v, items)
+        nb_items, CAPACITY, weights, values, items)
     stop = time.time()
     solving_time = stop - start
 
-    print("best cost: ", cost)
-    print("best profit: ", best_profit)
-    best_combination_str = " ".join("%s" % i for i in best_subset)
-    print(best_combination_str)
-    # print("numeros actions: ", list_index)
-    print("time: ", solving_time)
+    print_results(cost, best_profit, best_subset, solving_time)
