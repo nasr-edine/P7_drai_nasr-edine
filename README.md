@@ -12,7 +12,7 @@ cd P7_drai_nasr-edine
 ```
 Create a virtual environment in root folder of project 
 ```bash
-python -m venv env
+python3 -m venv env
 ```
 Activate virtual environment
 ```bash
@@ -33,6 +33,7 @@ python main.py [-h] -f FILENAME [-m {brute,dynamic}]
 
     .
     ├── main.py        # the main script to run 
+    ├── csv_parser.py  # for get datas from csv file
     ├── bruteforce.py  # contains bruteforce solver 
     ├── optimized.py   # contains dynamic programming solver
     ├── requirements   # contains dependencies
@@ -53,9 +54,9 @@ flake8 --format=html --htmldir=flake-report --exclude=env
 
 * open flake-report/index.html file with your browser
 ```bash
-open -a "Google Chrome" index.html
-open -a "firefox" index.html
-open -a "safari" index.html
+open -a "Google Chrome" flake-report/index.html
+open -a "firefox" flake-report/index.html
+open -a "safari" flake-report/index.html
 ```
 ##### In command line
 ```bash 

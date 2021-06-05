@@ -30,7 +30,8 @@ if __name__ == '__main__':
                         help='Path to csv file')
     parser.add_argument("-m", default=BRUTE_FORCE, type=str, dest="method",
                         choices=[BRUTE_FORCE, DYNAMIC_PROGRAMMING],
-                        help="Solving method. Default value: brute force method")
+                        help="Solving method. "
+                        "Default value: brute force method")
     args = parser.parse_args()
 
     csv_path = args.filename
@@ -45,7 +46,7 @@ if __name__ == '__main__':
     for i in range(nb_items):
         weights[i] = int(weights[i] * 100)
 
-    # mutiplication for get the profit values in euro currency instead of percent
+    # mutiplication for get the profit values in euro currency
     for i in range(nb_items):
         values[i] = weights[i] * values[i]
 

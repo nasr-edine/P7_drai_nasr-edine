@@ -10,7 +10,7 @@ def dynamic_programming_solver(items, weights, values, capacity, n_items):
 
     rows, cols = (n_items, capacity+1)
 
-    # create a two dimensional array for Memoization, each element is initialized to '0'
+    # create a two dimensional array for Memoization
     M = [[0 for i in range(cols)] for j in range(rows)]
 
     for row in range(rows):
