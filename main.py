@@ -1,12 +1,14 @@
-import sys
 import time
-import os
+import argparse
 
 from pathlib import Path
 
 from csv_parser import getDataFromCsv
 from bruteforce import brute_force_solver
 from optimized import dynamic_programming_solver
+
+BRUTE_FORCE = "brute"
+DYNAMIC_PROGRAMMING = "dynamic"
 
 
 def print_results(cost, best_profit, best_subset, solving_time):
@@ -23,14 +25,17 @@ def print_results(cost, best_profit, best_subset, solving_time):
 
 
 if __name__ == '__main__':
-    try:
-        filename = (sys.argv[1])
-    except:
-        print('Usage: python main.py FILENAME')
-        sys.exit(1)
 
-    path = Path("./")
-    csv_path = os.path.join(path, filename)
+    parser = argparse.ArgumentParser(
+        description='Script solving the best shares to buy for 500€ problem')
+    parser.add_argument('-f', required=True, type=str, dest="filename",
+                        help='Path to csv file')
+    parser.add_argument("-m", default=BRUTE_FORCE, type=str, dest="method",
+                        choices=[BRUTE_FORCE, DYNAMIC_PROGRAMMING],
+                        help="Solving method. Default value: brute force method")
+    args = parser.parse_args()
+
+    csv_path = args.filename
 
     # get datas from csv file
     capacity = 500
@@ -46,18 +51,14 @@ if __name__ == '__main__':
     for i in range(nb_items):
         values[i] = weights[i] * values[i]
 
-    # beginning brute force solver
     start = time.time()
-    cost, best_profit, best_subset = brute_force_solver(
-        nb_items, capacity, weights, values, items)
-    stop = time.time()
-    solving_time = stop - start
-    print_results(cost, best_profit, best_subset, solving_time)
+    if args.method == BRUTE_FORCE:
+        cost, best_profit, best_subset = brute_force_solver(
+            nb_items, capacity, weights, values, items)
 
-    # beginning dynamic programming solver
-    start = time.time()
-    cost, best_profit, best_subset = dynamic_programming_solver(
-        items, weights, values, capacity, nb_items)
+    if args.method == DYNAMIC_PROGRAMMING:
+        cost, best_profit, best_subset = dynamic_programming_solver(
+            items, weights, values, capacity, nb_items)
     stop = time.time()
     solving_time = stop - start
     print_results(cost, best_profit, best_subset, solving_time)
