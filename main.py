@@ -4,7 +4,7 @@ import os
 
 from pathlib import Path
 
-from csv_parser import getDataFromCsv, printDataSet
+from csv_parser import getDataFromCsv
 from bruteforce import brute_force
 
 

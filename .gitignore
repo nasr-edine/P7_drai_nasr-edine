@@ -14,3 +14,6 @@ ortool_knapsack_solver.py
 recursion_brute_force.py
 KnapsackProblems.pdf
 doc/
+csv/real_dataset/share_dataset1.csv
+csv/real_dataset/test_dataset.csv
+dp_knapsack2.py

@@ -1,7 +1,7 @@
 import itertools
 import sys
 
-from csv_parser import getDataFromCsv, printDataSet
+from csv_parser import getDataFromCsv
 from pathlib import Path
 
 if len(sys.argv) == 2:
