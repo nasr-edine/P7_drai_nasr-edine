@@ -1,8 +1,6 @@
 import time
 import argparse
 
-from pathlib import Path
-
 from csv_parser import getDataFromCsv
 from bruteforce import brute_force_solver
 from optimized import dynamic_programming_solver
@@ -38,9 +36,9 @@ if __name__ == '__main__':
     csv_path = args.filename
 
     # get datas from csv file
-    capacity = 500
     items, weights, values = getDataFromCsv(csv_path)
     nb_items = len(items)
+    capacity = 500
 
     # multiplication by 100 for using integer numbers instead of floats
     capacity *= 100
@@ -52,13 +50,14 @@ if __name__ == '__main__':
         values[i] = weights[i] * values[i]
 
     start = time.time()
+    # selecting problem solving algorithm
     if args.method == BRUTE_FORCE:
         cost, best_profit, best_subset = brute_force_solver(
             nb_items, capacity, weights, values, items)
-
     if args.method == DYNAMIC_PROGRAMMING:
         cost, best_profit, best_subset = dynamic_programming_solver(
             items, weights, values, capacity, nb_items)
+
     stop = time.time()
     solving_time = stop - start
     print_results(cost, best_profit, best_subset, solving_time)
