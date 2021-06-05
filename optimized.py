@@ -1,10 +1,14 @@
 
-def dynamic_programming_solver(items, weights, values, CAPACITY, n_items):
-    if CAPACITY <= 0 or n_items == 0 or len(weights) != n_items:
-        print("error")
-        exit()
+def dynamic_programming_solver(items, weights, values, capacity, n_items):
+    """Dynamic programming method for solving knapsack problem
+    :param n_items: number of existing items
+    :param capacity: the capacity of knapsack
+    :param weights: list of weights
+    :param values: list of values
+    :return: (cost, max_value, best_items)
+    """
 
-    rows, cols = (n_items, CAPACITY+1)
+    rows, cols = (n_items, capacity+1)
 
     # create a two dimensional array for Memoization, each element is initialized to '0'
     M = [[0 for i in range(cols)] for j in range(rows)]

@@ -7,7 +7,7 @@ def brute_force_solver(n, capacity, weights, values, items):
     :param capacity: the capacity of knapsack
     :param weights: list of weights
     :param values: list of values
-    :return: (cost, max_value, best_subset, list_index)
+    :return: (cost, max_value, best_subset)
     """
     max_value = 0
     for index in range(n):
